@@ -1,0 +1,41 @@
+clc;clear;
+
+N = 5000;
+m = 9;
+
+Q1 = sin(pi*(rand(1,N)) - (pi/2));
+
+Y = hist(Q1,m)/N;
+P = [0,Y];
+
+X1 = linspace(-1,1,m);
+
+X = [X1,1];
+
+Q = cumsum(P);
+R = 1-Q;
+
+H = P./R;
+
+disp('Probabilities within the m intervals');
+[X', P', R', H']
+
+figure(1)
+
+q = 2/m;
+Y = Y/q;
+bar(X1, Y);
+
+hold on;
+
+n1 = find(X1<=0);
+x1 = X1(n1);
+
+n2 = find(X1>0);
+x2 = X1(n2);
+
+fx(n1) = 1./(pi.*(sqrt(1-(x1.*x1))));
+fx(n2) = 1./(pi.*(sqrt(1-(x2.*x2))));
+
+plot(X1, fx, 'r','linewidth',3);
+title('Arcsine Distribution');
